@@ -145,8 +145,8 @@ while true do
 	data['hits']['hits'].each{|doc|
 		### === implement possible modifications to the document
 		### === end modifications to the document
-		bulk << %Q({"#{bulk_op}": {"_index" : "#{didx}", "_id" : "#{
-				doc['_id']}", "_type" : "#{doc['_type']}"}}\n)
+		bulk << Oj.dump({bulk_op => {"_index" => didx, "_id" => doc['_id'], 
+		                             "_type" => doc['_type']}}) + "\n"
 		bulk << Oj.dump(doc['_source']) + "\n"
 		done += 1
 	}
